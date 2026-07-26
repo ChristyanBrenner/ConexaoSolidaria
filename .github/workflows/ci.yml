@@ -47,11 +47,11 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restaurar dependências do Worker
-        run: dotnet restore ConexaoSolidaria.Worker/ConexaoSolidaria.Worker/ConexaoSolidaria.Worker.sln
+        run: run: dotnet restore ConexaoSolidaria.Worker/ConexaoSolidaria.Worker.sln
 
       - name: Compilar Worker
         run: >
           dotnet build
-          ConexaoSolidaria.Worker/ConexaoSolidaria.Worker/ConexaoSolidaria.Worker.sln
+          ConexaoSolidaria.Worker/ConexaoSolidaria.Worker.sln
           --configuration Release
           --no-restore
