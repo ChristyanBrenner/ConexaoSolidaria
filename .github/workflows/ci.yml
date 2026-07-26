@@ -1,0 +1,57 @@
+name: CI - ConexaoSolidaria
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-api:
+    name: Build API
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restaurar dependências da API
+        run: dotnet restore ConexaoSolidaria.API/ConexaoSolidaria.API/ConexaoSolidaria.API.sln
+
+      - name: Compilar API
+        run: >
+          dotnet build
+          ConexaoSolidaria.API/ConexaoSolidaria.API/ConexaoSolidaria.API.sln
+          --configuration Release
+          --no-restore
+
+  build-worker:
+    name: Build Worker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restaurar dependências do Worker
+        run: dotnet restore ConexaoSolidaria.Worker/ConexaoSolidaria.Worker/ConexaoSolidaria.Worker.sln
+
+      - name: Compilar Worker
+        run: >
+          dotnet build
+          ConexaoSolidaria.Worker/ConexaoSolidaria.Worker/ConexaoSolidaria.Worker.sln
+          --configuration Release
+          --no-restore
