@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conexao-solidaria-api
+  namespace: conexao-solidaria
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: conexao-solidaria-api
+  template:
+    metadata:
+      labels:
+        app: conexao-solidaria-api
+    spec:
+      containers:
+      - name: api
+        image: christyansouza/conexao-solidaria-api:latest
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 8080
+
+        envFrom:
+        - configMapRef:
+            name: conexao-solidaria-api-config
+
+        - secretRef:
+            name: conexao-solidaria-api-secret

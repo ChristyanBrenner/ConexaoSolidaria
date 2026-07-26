@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: conexao-solidaria-api-config
+  namespace: conexao-solidaria
+
+data:
+  ASPNETCORE_ENVIRONMENT: "Production"
+
+  RabbitMq__Host: "rabbitmq-service"

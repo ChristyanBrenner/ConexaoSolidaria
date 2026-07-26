@@ -1,0 +1,110 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: conexao-solidaria-sqlserver
+    restart: unless-stopped
+
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${SQLSERVER_PASSWORD}"
+      MSSQL_PID: "Developer"
+
+    ports:
+      - "1433:1433"
+
+    volumes:
+      - conexao-solidaria-sql-data:/var/opt/mssql
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P '${SQLSERVER_PASSWORD}' -C -Q 'SELECT 1' || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: conexao-solidaria-rabbitmq
+    restart: unless-stopped
+
+    environment:
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_USERNAME}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASSWORD}"
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  api:
+    container_name: conexao-solidaria-api
+    restart: unless-stopped
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: conexao-solidaria-api:latest
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:8080"
+
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=ConexaoSolidaria;User Id=sa;Password=${SQLSERVER_PASSWORD};TrustServerCertificate=True;Encrypt=False;"
+
+      Jwt__Key: "${JWT_KEY}"
+      Jwt__Issuer: "ConexaoSolidaria.API"
+      Jwt__Audience: "ConexaoSolidaria.Client"
+
+      RabbitMQ__Host: "rabbitmq"
+      RabbitMQ__Username: "${RABBITMQ_USERNAME}"
+      RabbitMQ__Password: "${RABBITMQ_PASSWORD}"
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+      rabbitmq:
+        condition: service_healthy
+
+  worker:
+    container_name: conexao-solidaria-worker
+    restart: unless-stopped
+  
+    build:
+      context: ../../ConexaoSolidaria.Worker
+      dockerfile: ConexaoSolidaria.Worker/Dockerfile
+  
+    image: conexao-solidaria-worker:latest
+  
+    environment:
+      DOTNET_ENVIRONMENT: "Development"
+  
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=ConexaoSolidaria;User Id=sa;Password=${SQLSERVER_PASSWORD};TrustServerCertificate=True;Encrypt=False;"
+  
+      RabbitMQ__Host: "rabbitmq"
+      RabbitMQ__Username: "${RABBITMQ_USERNAME}"
+      RabbitMQ__Password: "${RABBITMQ_PASSWORD}"
+  
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+  
+      rabbitmq:
+        condition: service_healthy
+
+volumes:
+  conexao-solidaria-sql-data:

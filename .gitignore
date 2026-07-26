@@ -1,0 +1,35 @@
+# Build
+**/bin/
+**/obj/
+
+# Visual Studio
+.vs/
+**/.vs/
+*.user
+*.suo
+
+# VS Code
+.vscode/
+
+# Rider
+.idea/
+
+# Logs
+*.log
+
+# Arquivos de ambiente
+.env
+**/.env
+.env.*
+**/.env.*
+
+# Permitir apenas exemplos
+!.env.example
+!**/.env.example
+
+# Secrets Kubernetes
+**/secret*.yaml
+
+# Sistema operacional
+.DS_Store
+Thumbs.db

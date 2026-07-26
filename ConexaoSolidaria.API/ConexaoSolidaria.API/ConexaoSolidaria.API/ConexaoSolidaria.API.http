@@ -1,0 +1,6 @@
+@ConexaoSolidaria.API_HostAddress = http://localhost:5096
+
+GET {{ConexaoSolidaria.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
