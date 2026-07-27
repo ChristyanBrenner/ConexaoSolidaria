@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Baixar código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Configurar .NET
         uses: actions/setup-dotnet@v5
@@ -33,13 +33,30 @@ jobs:
           --configuration Release
           --no-restore
 
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Gerar imagem Docker da API
+        uses: docker/build-push-action@v7
+        with:
+          context: ConexaoSolidaria.API/ConexaoSolidaria.API
+          file: ConexaoSolidaria.API/ConexaoSolidaria.API/Dockerfile
+          push: false
+          load: true
+          tags: conexao-solidaria-api:latest
+
+      - name: Verificar imagem Docker da API
+        run: |
+          docker image inspect conexao-solidaria-api:latest
+          docker image ls conexao-solidaria-api
+
   build-worker:
     name: Build Worker
     runs-on: ubuntu-latest
 
     steps:
       - name: Baixar código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Configurar .NET
         uses: actions/setup-dotnet@v5
@@ -55,3 +72,20 @@ jobs:
           ConexaoSolidaria.Worker/ConexaoSolidaria.Worker.sln
           --configuration Release
           --no-restore
+
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Gerar imagem Docker do Worker
+        uses: docker/build-push-action@v7
+        with:
+          context: ConexaoSolidaria.Worker
+          file: ConexaoSolidaria.Worker/Dockerfile
+          push: false
+          load: true
+          tags: conexao-solidaria-worker:latest
+
+      - name: Verificar imagem Docker do Worker
+        run: |
+          docker image inspect conexao-solidaria-worker:latest
+          docker image ls conexao-solidaria-worker

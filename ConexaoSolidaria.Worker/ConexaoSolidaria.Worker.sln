@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConexaoSolidaria.Worker", "ConexaoSolidaria.Worker\ConexaoSolidaria.Worker.csproj", "{6CBAB18B-0481-41DF-BFA3-A76062D14F14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConexaoSolidaria.Worker", "ConexaoSolidaria.Worker\ConexaoSolidaria.Worker.csproj", "{6CBAB18B-0481-41DF-BFA3-A76062D14F14}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{7D5FAE9E-126F-4084-8839-4958084E0AD7}"
+	ProjectSection(SolutionItems) = preProject
+		worker-deployment.yaml = worker-deployment.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

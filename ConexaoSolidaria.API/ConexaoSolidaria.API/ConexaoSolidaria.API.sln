@@ -3,13 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConexaoSolidaria.API", "ConexaoSolidaria.API\ConexaoSolidaria.API.csproj", "{7D530B95-ACA7-4CD3-BA75-38B2D51940FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConexaoSolidaria.API", "ConexaoSolidaria.API\ConexaoSolidaria.API.csproj", "{7D530B95-ACA7-4CD3-BA75-38B2D51940FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{EEF8DCD5-0DBD-4DF3-8E98-B4C2A5F9B195}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{EEF8DCD5-0DBD-4DF3-8E98-B4C2A5F9B195}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{BC386F9F-6714-4A6A-9673-87A6E818D020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{BC386F9F-6714-4A6A-9673-87A6E818D020}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{D7BC631D-66EC-4144-A3B1-576209683A52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{D7BC631D-66EC-4144-A3B1-576209683A52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{D9A77F53-CE4D-4C22-8468-8A07618F8603}"
+	ProjectSection(SolutionItems) = preProject
+		api-deployment.yaml = api-deployment.yaml
+		api-service.yaml = api-service.yaml
+		configmap-api.yaml = configmap-api.yaml
+		docker-compose.yml = docker-compose.yml
+		namespace.yaml = namespace.yaml
+		rabbitmq-deployment.yaml = rabbitmq-deployment.yaml
+		rabbitmq-service.yaml = rabbitmq-service.yaml
+		secret-api.yaml = secret-api.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{0AB38632-CC2A-4FBF-BF48-D7AA42B0FC97}"
+	ProjectSection(SolutionItems) = preProject
+		.env = .env
+		.env.example = .env.example
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
