@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Baixar código
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Configurar .NET
         uses: actions/setup-dotnet@v5
@@ -34,10 +34,10 @@ jobs:
           --no-restore
 
       - name: Configurar Docker Buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@v3
 
       - name: Gerar imagem Docker da API
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@v6
         with:
           context: ConexaoSolidaria.API/ConexaoSolidaria.API
           file: ConexaoSolidaria.API/ConexaoSolidaria.API/Dockerfile
@@ -56,7 +56,7 @@ jobs:
 
     steps:
       - name: Baixar código
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Configurar .NET
         uses: actions/setup-dotnet@v5
@@ -74,13 +74,13 @@ jobs:
           --no-restore
 
       - name: Configurar Docker Buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@v3
 
       - name: Gerar imagem Docker do Worker
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@v6
         with:
           context: ConexaoSolidaria.Worker
-          file: ConexaoSolidaria.Worker/Dockerfile
+          file: ConexaoSolidaria.Worker/ConexaoSolidaria.Worker/Dockerfile
           push: false
           load: true
           tags: conexao-solidaria-worker:latest
